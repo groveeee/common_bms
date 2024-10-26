@@ -4,3 +4,47 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+
+# 异步
+async-trait = "0.1.83"
+# 时间处理
+chrono = { version = "0.4.38", features = ["serde"] }
+# 环境变量
+dotenv = "0.15.0"
+# JWT
+jsonwebtoken = "9.3.0"
+# 序列化
+serde = { version = "1.0.183", features = ["derive"] }
+# JSON序列化
+serde_json = "1.0.104"
+# 异步数据库操作
+sqlx = { version = "0.8.1", features = ["runtime-async-std-native-tls", "postgres", "chrono", "uuid"] }
+redis = { version = "0.27.5",features = ["tokio-comp","r2d2"] }
+uuid = { version = "1.4.1", features = ["serde", "v4"] }
+# 数据校验
+validator = { version = "0.18.1", features = ["derive"] }
+# web框架
+axum = "0.7.5"
+# axum扩展
+axum-extra = { version = "0.9.3", features = ["cookie"]}
+# 异步运行时
+tokio = { version = "1.39.3", features = ["full"] }
+# 中间件
+tower = "0.5.0"
+tower-http = { version = "0.6.1", features = ["cors","trace"] }
+time = "0.3.20"
+# 日志
+log = "0.4.22"
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18"}
+# 邮件
+lettre = "0.11.7"
+# 错误传播
+anyhow = "1.0.89"
+# http请求
+reqwest = { version = "0.12.8",features = ["cookies","blocking"] }
+# 加密
+argon2 = "0.5.3"
+rsa = "0.9.6"
+aes-gcm = "0.10.3"
+rand = "0.8.5"
