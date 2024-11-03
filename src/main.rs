@@ -1,5 +1,6 @@
 use std::{sync::Arc, thread::AccessError};
 
+use crate::utils::ip_util::get_local_ip;
 use axum::http::{
     header::{ACCEPT, AUTHORIZATION, CONTENT_TYPE, STRICT_TRANSPORT_SECURITY},
     HeaderValue, Method,
@@ -7,19 +8,17 @@ use axum::http::{
 use config::Config;
 use dotenv::dotenv;
 use log::{error, info};
-use redis::{AsyncCommands, RedisConnectionInfo, RedisResult};
 use redis::aio::MultiplexedConnection;
+use redis::{AsyncCommands, RedisConnectionInfo, RedisResult};
 use routes::create_router;
 use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
 use tower_http::cors::CorsLayer;
 use tracing_subscriber::filter::LevelFilter;
-use crate::utils::ip_util::get_local_ip;
 
 mod config;
-mod routes;
 mod error;
+mod routes;
 mod utils;
-
 
 #[derive(Clone, Debug)]
 pub struct AppState {
@@ -78,8 +77,7 @@ async fn main() {
     let app = create_router(Arc::new(app_state.clone())).layer(cors);
 
     let addr = get_local_ip();
-    info!("Server is running on http://{}:{}", addr,config.port);
-
+    info!("Server is running on http://{}:{}", addr, config.port);
 
     let listener = tokio::net::TcpListener::bind(format!("0.0.0.0:{}", &config.port))
         .await

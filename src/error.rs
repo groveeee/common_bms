@@ -1,11 +1,11 @@
-use std::fmt::{Display, Formatter};
 use axum::response::{IntoResponse, Response};
 use serde::Serialize;
+use std::fmt::{Display, Formatter};
 
 /**
  * 错误枚举
  */
-#[derive(Debug,Serialize)]
+#[derive(Debug, Serialize)]
 pub enum AppError {
     /// 未找到
     NotFound,
@@ -35,21 +35,21 @@ impl Display for AppError {
 impl IntoResponse for AppError {
     fn into_response(self) -> Response {
         match self {
-            AppError::NotFound => {
-                (axum::http::StatusCode::NOT_FOUND, "Not Found").into_response()
-            },
+            AppError::NotFound => (axum::http::StatusCode::NOT_FOUND, "Not Found").into_response(),
             AppError::InnerError(msg) => {
                 (axum::http::StatusCode::INTERNAL_SERVER_ERROR, msg).into_response()
-            },
-            AppError::DatabaseError => {
-                (axum::http::StatusCode::INTERNAL_SERVER_ERROR, "Database Error").into_response()
-            },
+            }
+            AppError::DatabaseError => (
+                axum::http::StatusCode::INTERNAL_SERVER_ERROR,
+                "Database Error",
+            )
+                .into_response(),
             AppError::CacheError => {
                 (axum::http::StatusCode::INTERNAL_SERVER_ERROR, "Cache Error").into_response()
-            },
+            }
             AppError::ValidationError => {
                 (axum::http::StatusCode::BAD_REQUEST, "Validation Error").into_response()
-            },
+            }
         }
     }
 }
